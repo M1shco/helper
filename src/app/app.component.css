@@ -1,0 +1,41 @@
+
+
+/* Fondo amarillo para el header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #FFEB3B;  /* Amarillo */
+    color: black;  /* Letras negras */
+  }
+  
+  /* Título grande a la izquierda */
+  .title {
+    font-size: 36px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  /* Estilo para los botones */
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: black;  /* Fondo negro */
+    color: white;  /* Texto blanco */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: #333;  /* Cambia a un negro más oscuro al pasar el ratón */
+  }
+  
