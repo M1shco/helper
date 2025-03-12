@@ -1,69 +1,96 @@
 <!-- Contenedor principal -->
 <div class="container">
-  <h2>Mantenimientos</h2>
+  <h2 class="section-title">Mantenimientos</h2>
 
   <!-- Botón para abrir el modal con el símbolo "+" -->
   <button class="btn btn-primary add-btn" (click)="abrirModal()">+</button>
 
   <!-- Mostrar el mensaje cuando no hay mantenimientos -->
   <div *ngIf="mantenimientos.length === 0" class="no-mantenimientos">
-      No hay ningún mantenimiento.
+    No hay ningún mantenimiento.
   </div>
 
   <!-- Mostrar los mantenimientos como tarjetas -->
   <div class="mantenimiento-cards-container">
-      <div *ngFor="let mantenimiento of mantenimientos" class="mantenimiento-card">
-          <img *ngIf="mantenimiento.imgUrl" [src]="mantenimiento.imgUrl" alt="Mantenimiento Imagen" class="mantenimiento-img">
-          <div class="mantenimiento-info">
-              <h4>{{ mantenimiento.titulo }}</h4>
-              <p>{{ mantenimiento.descripcion }}</p>
-              <span class="estado" [ngClass]="{
-                  'activo': mantenimiento.estado === 'Activo',
-                  'hecho': mantenimiento.estado === 'Hecho'
-              }">{{ mantenimiento.estado }}</span>
-              <!-- Botón para eliminar el mantenimiento -->
-              <button class="delete-btn" (click)="eliminarMantenimiento(mantenimiento)">Eliminar</button>
+    <div *ngFor="let mantenimiento of mantenimientos" class="mantenimiento-card">
+      <img *ngIf="mantenimiento.imgUrl" [src]="mantenimiento.imgUrl" alt="Mantenimiento Imagen" class="mantenimiento-img">
+      <div class="mantenimiento-info">
+        <h4>{{ mantenimiento.titulo }}</h4>
+        <p>{{ mantenimiento.descripcion }}</p>
+        
+        <!-- Información adicional del mantenimiento -->
+        <div class="mantenimiento-meta">
+          <div class="mantenimiento-details">
+            <span class="estado" [ngClass]="{
+                'activo': mantenimiento.estado === 'Activo',
+                'hecho': mantenimiento.estado === 'Hecho'
+            }">{{ mantenimiento.estado }}</span>
+            <span class="fecha" *ngIf="mantenimiento.fechaCreacion">
+              Creado: {{ formatDate(mantenimiento.fechaCreacion) }}
+            </span>
           </div>
+          
+          <!-- Mostrar el responsable si existe -->
+          <div class="responsable-info" *ngIf="mantenimiento.responsable">
+            <span class="responsable-label">Responsable:</span>
+            <span class="responsable-name">{{ mantenimiento.responsable }}</span>
+          </div>
+        </div>
+        
+        <!-- Botón para eliminar el mantenimiento -->
+        <button class="btn-eliminar" (click)="eliminarMantenimiento(mantenimiento)">Eliminar</button>
       </div>
+    </div>
   </div>
 
   <!-- Modal para agregar mantenimiento -->
   <div *ngIf="showModal" class="modal">
-      <div class="modal-content">
-          <span class="close" (click)="cerrarModal()">&times;</span>
-          <h3>Agregar Mantenimiento</h3>
+    <div class="modal-content">
+      <span class="close" (click)="cerrarModal()">&times;</span>
+      <h3>Agregar Mantenimiento</h3>
 
-          <!-- Formulario -->
-          <form (ngSubmit)="agregarMantenimiento()">
-              <div>
-                  <label for="titulo">Título:</label>
-                  <input type="text" id="titulo" [(ngModel)]="titulo" name="titulo" placeholder="Título del mantenimiento">
-              </div>
+      <!-- Formulario -->
+      <form (ngSubmit)="agregarMantenimiento()">
+        <div class="form-group">
+          <label for="titulo">Título:</label>
+          <input type="text" id="titulo" [(ngModel)]="titulo" name="titulo" placeholder="Título del mantenimiento" required>
+        </div>
 
-              <div>
-                  <label for="descripcion">Descripción:</label>
-                  <textarea id="descripcion" [(ngModel)]="descripcion" name="descripcion" placeholder="Descripción del mantenimiento"></textarea>
-              </div>
+        <div class="form-group">
+          <label for="descripcion">Descripción:</label>
+          <textarea id="descripcion" [(ngModel)]="descripcion" name="descripcion" placeholder="Descripción del mantenimiento" required></textarea>
+        </div>
 
-              <div>
-                  <label for="estado">Estado:</label>
-                  <select id="estado" [(ngModel)]="estado" name="estado">
-                      <option value="Activo">Activo</option>
-                      <option value="Hecho">Hecho</option>
-                  </select>
-              </div>
+        <div class="form-group">
+          <label for="responsable">Responsable:</label>
+          <input type="text" id="responsable" [(ngModel)]="responsable" name="responsable" placeholder="Nombre del responsable">
+        </div>
 
-              <!-- Campo para seleccionar imagen -->
-              <div>
-                  <label for="foto">Foto:</label>
-                  <input type="file" id="foto" (change)="handleFileInput($event)">
-                  <div *ngIf="imgUrl" class="image-preview">
-                      <img [src]="imgUrl" alt="Imagen seleccionada" class="image-preview-img">
-                  </div>
-              </div>
+        <div class="form-group">
+          <label for="estado">Estado:</label>
+          <select id="estado" [(ngModel)]="estado" name="estado">
+            <option value="Activo">Activo</option>
+            <option value="Hecho">Hecho</option>
+          </select>
+        </div>
 
-              <button type="submit">Listo</button>
-          </form>
-      </div>
+        <div class="form-group">
+          <label for="fechaCreacion">Fecha de Creación:</label>
+          <input type="date" id="fechaCreacion" [(ngModel)]="fechaCreacion" name="fechaCreacion">
+        </div>
+
+        <!-- Campo para seleccionar imagen -->
+        <div class="form-group">
+          <label for="foto">Foto:</label>
+          <input type="file" id="foto" (change)="handleFileInput($event)">
+          <div *ngIf="imgUrl" class="image-preview">
+            <img [src]="imgUrl" alt="Imagen seleccionada" class="image-preview-img">
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit">Guardar</button>
+      </form>
+    </div>
   </div>
 </div>
+

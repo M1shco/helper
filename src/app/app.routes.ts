@@ -1,19 +1,30 @@
-import { Routes } from '@angular/router';
-import { HomeComponent } from './Components/home/home.component';
-import { ListaComponent } from './Components/lista/lista.component';
+import type { Routes } from "@angular/router"
+import { AuthGuard } from "./guards/auth.guard"
 
 export const routes: Routes = [
-    {path: '',
-        loadComponent: () => import('./Components/home/home.component').then(m => m.HomeComponent)
-      },
-  {path: 'home',
-    loadComponent: () => import('./Components/home/home.component').then(m => m.HomeComponent)
+  {
+    path: "",
+    redirectTo: "login",
+    pathMatch: "full",
   },
-  {path: 'lista',
-    loadComponent: () => import('./Components/lista/lista.component').then(m => m.ListaComponent)
+  {
+    path: "home",
+    loadComponent: () => import("./Components/home/home.component").then((m) => m.HomeComponent),
+    canActivate: [AuthGuard],
   },
-  {path: '**',
-    redirectTo:'',
-    pathMatch:'full'
+  {
+    path: "lista",
+    loadComponent: () => import("./Components/lista/lista.component").then((m) => m.ListaComponent),
+    canActivate: [AuthGuard],
   },
-];
+  {
+    path: "login",
+    loadComponent: () => import("./Components/login/login.component").then((m) => m.LoginComponent),
+  },
+  {
+    path: "**",
+    redirectTo: "login",
+    pathMatch: "full",
+  },
+]
+

@@ -1,15 +1,41 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';  // Importar RouterOutlet
-import { RouterModule } from '@angular/router';  // Importar RouterModule
-import { routes } from './app.routes';  // Importar las rutas definidas
+import { Component, type OnInit } from "@angular/core"
+import { Router, RouterOutlet, RouterModule, NavigationEnd } from "@angular/router"
+import { CommonModule } from "@angular/common"
+import { filter } from "rxjs/operators"
+import { AuthService } from "./Services/auth.service"
 
 @Component({
-  selector: 'app-root',
-  standalone: true,  // Indicar que es un componente standalone
-  imports: [RouterOutlet, RouterModule],  // Incluir RouterModule para manejar las rutas
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: "app-root",
+  standalone: true,
+  imports: [RouterOutlet, RouterModule, CommonModule],
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
-  title = 'myapp';
+export class AppComponent implements OnInit {
+  title = "myapp"
+  showHeader = false
+  isLoggedIn = false
+
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+  ) {
+    // Suscribirse a los eventos de navegación para determinar si mostrar el header
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event: any) => {
+      // Ocultar el header en la ruta de login
+      this.showHeader = !event.url.includes("/login")
+    })
+  }
+
+  ngOnInit() {
+    // Suscribirse al estado de autenticación
+    this.authService.isLoggedIn$.subscribe((loggedIn) => {
+      this.isLoggedIn = loggedIn
+    })
+  }
+
+  logout() {
+    this.authService.logout()
+  }
 }
+

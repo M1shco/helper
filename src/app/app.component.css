@@ -1,41 +1,86 @@
-
-
 /* Fondo amarillo para el header */
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    background-color: #FFEB3B;  /* Amarillo */
-    color: black;  /* Letras negras */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background-color: #ffeb3b; /* Amarillo */
+  color: black; /* Letras negras */
+}
+
+/* Título grande a la izquierda */
+.title {
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Estilo para los botones */
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: black; /* Fondo negro */
+  color: white; /* Texto blanco */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #333; /* Cambia a un negro más oscuro al pasar el ratón */
+}
+
+.logout-button {
+  background-color: #f44336;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    padding: 10px;
   }
-  
-  /* Título grande a la izquierda */
+
   .title {
-    font-size: 36px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-size: 28px;
+    margin-bottom: 10px;
   }
-  
-  /* Estilo para los botones */
+
   .buttons {
-    display: flex;
-    gap: 10px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
   }
-  
+
   .button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: black;  /* Fondo negro */
-    color: white;  /* Texto blanco */
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    padding: 8px 15px;
+    font-size: 14px;
   }
-  
-  .button:hover {
-    background-color: #333;  /* Cambia a un negro más oscuro al pasar el ratón */
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px;
   }
-  
+
+  .buttons {
+    gap: 5px;
+  }
+
+  .button {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
